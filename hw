@@ -1,0 +1,36 @@
+let query = "inf";
+
+const inputSearch = document.querySelector('#searchInput');
+const buttonSearch = document.querySelector('#searchButton');
+
+buttonSearch.addEventListener("click", (ev)=> {
+  ev.preventDefault();
+
+  const inputValue = inputSearch.value.trim();
+  if (inputValue) {
+    query = inputValue;
+  }
+
+  console.log(query);
+  getData();
+});
+
+const images = [];
+
+function getData() {
+  fetch(`https://pixabay.com/api/?key=${apiKey}&q=${query}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      const hits = data.hits;
+      console.log(hits);
+
+      hits.forEach(hit => {
+        const imageUrl = hit.largeImageURL;
+        images.push(imageUrl);
+      });
+
+      console.log(images);
+    });
+}
+
